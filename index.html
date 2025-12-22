@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login – Reporting Portal</title>
+
+<!-- Google Font for clean minimal look -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+/* --- Reset --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* --- Body --- */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f9f9f9;
+  color: #212529;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* --- Login Card --- */
+.login-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 40px 30px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  text-align: center;
+}
+
+/* --- Logo --- */
+.logo img {
+  width: 80px;
+  margin-bottom: 16px;
+}
+
+.logo span {
+  display: block;
+  font-size: 24px;
+  font-weight: 700;
+  color: #00bf63; /* Zong green */
+  margin-bottom: 24px;
+}
+
+/* --- Header --- */
+.login-card p {
+  font-size: 14px;
+  color: #6c757d;
+  margin-bottom: 28px;
+}
+
+/* --- Inputs --- */
+input {
+  width: 100%;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: #00bf63;
+  box-shadow: 0 0 0 3px rgba(0,191,99,0.15);
+}
+
+/* --- Button --- */
+button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  color: white;
+  background-color: #00bf63; /* Zong green */
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: #00a54a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,191,99,0.3);
+}
+
+/* --- Error Message --- */
+#errorMsg {
+  margin-top: 12px;
+  font-size: 13px;
+  color: #dc2626;
+}
+</style>
+</head>
+
+<body>
+
+<div class="login-card">
+  <div class="logo">
+    <img src="zong.png" alt="Zong Logo">
+    <span>Reporting Portal</span>
+  </div>
+
+  <p>Sign in to access your reporting dashboard</p>
+
+  <input type="text" id="username" placeholder="Username">
+  <input type="password" id="password" placeholder="Password">
+  <button onclick="login()">Sign In</button>
+  <div id="errorMsg"></div>
+</div>
+
+<script>
+const whitelist = [
+  { username: "sameenyaser", password: "Zong@1234" },
+  { username: "naumanbashir", password: "Zong@1234" },
+  { username: "ahsanmaqsood", password: "Zong@1234" }
+];
+
+function login() {
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const errorMsg = document.getElementById("errorMsg");
+
+  const user = whitelist.find(u => u.username === username && u.password === password);
+
+  if (user) {
+    sessionStorage.setItem("username", user.username);
+    window.location.href = "home.html";
+  } else {
+    errorMsg.textContent = "Invalid username or password.";
+  }
+}
+</script>
+
+</body>
+</html>
