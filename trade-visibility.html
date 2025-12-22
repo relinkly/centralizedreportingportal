@@ -539,30 +539,13 @@ if (!loggedInUser) {
   longInput.placeholder = "Enter longitude manually";
 }
 
-function fetchIPLocationForForm() {
-  fetch('https://ipinfo.io/json?token=a14ee8911d1267')
-    .then(res => res.json())
-    .then(data => {
-      if (data.loc) {
-        const [lat, lng] = data.loc.split(',');
-        latInput.value = parseFloat(lat).toFixed(6);
-        longInput.value = parseFloat(lng).toFixed(6);
-        console.log("IP location used:", lat, lng);
-      } else {
-        setManualFallback();
-      }
-    })
-    .catch(() => {
-      setManualFallback();
-    });
-}
-
-function getLocationForForm() {
-  latInput.value = "Fetching...";
-  longInput.value = "Fetching...";
+function getExactDeviceLocation() {
+  latInput.value = "Waiting for GPS...";
+  longInput.value = "Waiting for GPS...";
 
   if (!navigator.geolocation) {
-    fetchIPLocationForForm();
+    alert("Your device does not support GPS location.");
+    setManualFallback();
     return;
   }
 
@@ -570,16 +553,31 @@ function getLocationForForm() {
     position => {
       latInput.value = position.coords.latitude.toFixed(6);
       longInput.value = position.coords.longitude.toFixed(6);
-      console.log("GPS location used:", position.coords);
+
+      console.log("✅ Exact GPS location:", {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+        accuracy: position.coords.accuracy + " meters"
+      });
     },
     error => {
-      console.warn("GPS failed, falling back to IP:", error.message);
-      fetchIPLocationForForm();
+      console.error("❌ GPS error:", error);
+
+      alert(
+        "Exact location is required.\n\n" +
+        "Please:\n" +
+        "• Enable Location Services\n" +
+        "• Allow browser location permission\n" +
+        "• Use HTTPS\n" +
+        "• Try again"
+      );
+
+      setManualFallback();
     },
     {
       enableHighAccuracy: true,
-      timeout: 15000,
-      maximumAge: 60000
+      timeout: 20000,   // GPS needs time
+      maximumAge: 0
     }
   );
 }
@@ -613,7 +611,7 @@ function getLocationForForm() {
     stopCamera();
 
     // 👉 Fetch device location
-    getLocationForForm();
+    getExactDeviceLocation();
 }
 
 
@@ -859,5 +857,4 @@ function getLocationForForm() {
         });
     </script>
 </body>
-
 </html>
