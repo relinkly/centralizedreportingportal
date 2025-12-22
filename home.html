@@ -670,23 +670,24 @@
             </a>
         </div>
     </div>
+<script>
+(function () {
+    const loggedInUser = sessionStorage.getItem("username");
 
-    <script>
-        (function protectHomePage() {
-            const loggedInUser = sessionStorage.getItem("username");
-            document.getElementById("welcomeUser").textContent = loggedInUser || "User";
+    // Block access if not logged in
+    if (!loggedInUser) {
+        window.location.replace("index.html");
+    }
+})();
 
-            if (!loggedInUser) {
-                window.location.replace("index.html");
-            }
-        })();
+function handleLogout() {
+    if (confirm("Are you sure you want to logout?")) {
+        sessionStorage.clear();
+        window.location.replace("index.html");
+    }
+}
+</script>
 
-        function handleLogout() {
-            if (confirm('Are you sure you want to logout?')) {
-                sessionStorage.clear();
-                window.location.replace('index.html');
-            }
-        }
-    </script>
+
 </body>
 </html>
