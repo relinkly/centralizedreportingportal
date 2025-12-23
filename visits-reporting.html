@@ -421,6 +421,8 @@
 }
 
 
+
+
     </style>
 </head>
 <body>
@@ -465,70 +467,193 @@
       target="hidden_iframe"
       novalidate>
 
-                    <div>
-                        <label for="username">Username</label>
-                        <input type="text" id="username" name="entry.87973702" readonly>
-                    </div>
+    <!-- Username -->
+    <div>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="entry.87973702" readonly>
+    </div>
 
-                    <div>
-                        <label for="region">Region</label>
-                        <select id="region" name="entry.1539264942" required>
-                            <option value="" disabled selected>Select region</option>
-                            <option value="Central 1">Central 1</option>
-                            <option value="Central 4">Central 4</option>
-                            <option value="Central 5">Central 5</option>
-                            <option value="Central 6">Central 6</option>
-                        </select>
-                    </div>
+    <!-- Region -->
+    <div>
+        <label for="region">Region</label>
+        <select id="region" name="entry.1539264942" required>
+            <option value="" disabled selected>Select region</option>
+            <option value="Central 1">Central 1</option>
+            <option value="Central 4">Central 4</option>
+            <option value="Central 5">Central 5</option>
+            <option value="Central 6">Central 6</option>
+        </select>
+    </div>
 
-                    <div>
-                        <label for="franchise">Franchise ID</label>
-                        <input type="text" id="franchise" name="entry.133050488" required>
-                    </div>
+    <!-- Franchise -->
+    <div>
+        <label for="franchise">Franchise ID</label>
+        <input type="text" id="franchise" name="entry.133050488" required>
+    </div>
 
-                    <div>
-                        <label for="area">Retailer Number</label>
-                        <input type="text" id="area" name="entry.1590069602" required>
-                        <div id="salesInfo" style="display:none; margin-top:8px;">
-                            <div class="sales-item">RET ID: <span id="retIdVal">-</span></div>
-                            <div class="sales-item">LM ETOP: <span id="etopVal">-</span></div>
-                            <div class="sales-item">LM VAS: <span id="vasVal">-</span></div>
-                            <div class="sales-item">LM ZL: <span id="zlVal">-</span></div>
-                        </div>
+    <!-- Area -->
+    <div>
+        <label for="area">Area</label>
+        <input type="text" id="area" name="entry.2102334677" required>
+    </div>
+
+    <!-- RSO ID -->
+    <div>
+        <label for="rsoId">RSO ID</label>
+        <input type="text" id="rsoId" name="entry.1053960928">
+    </div>
+
+    <!-- RSO Number -->
+    <div>
+        <label for="rsoNumber">RSO Number</label>
+        <input type="text" id="rsoNumber" name="entry.1113091229">
+    </div>
+
+    <!-- Retailer Name -->
+    <div>
+        <label for="retailerName">Retailer Name</label>
+        <input type="text" id="retailerName" name="entry.1271661439">
 
 
-                    </div>
+    <!-- Retailer Number -->
+    <div>
+        <label for="retailerNumber">Retailer Number</label>
+        <input type="text" id="retailerNumber" name="entry.1530103964">
+    </div>
 
-                    <div>
-                        <label for="date">Date</label>
-                        <input type="date" id="date" name="entry.1023894194" required>
-                    </div>
+        </div>
+    <div id="salesInfo" style="display:none; flex-direction: column; border: 1px solid #ccc; padding: 8px; margin-bottom: 12px;">
+    <div>Retailer ID: <span id="retIdVal">-</span></div>
+    <div>ETOP LM: <span id="etopVal">-</span></div>
+    <div>VAS LM: <span id="vasVal">-</span></div>
+    <div>ZL LM: <span id="zlVal">-</span></div>
+</div>
 
-                    <div>
-                        <label for="description">Questions Asked</label>
-                        <textarea id="description" name="entry.1030839560" required></textarea>
-                    </div>
+    <!-- Retailer Complete Address -->
+    <div>
+        <label for="retailerAddress">Retailer Complete Address</label>
+        <input type="text" id="retailerAddress" name="entry.1872480257">
+    </div>
 
-                    <fieldset>
-                        <legend>Upload or Capture Image(s)</legend>
-                        <div class="image-controls">
-                            <button type="button" class="image-btn" id="uploadImageBtn">Upload Image</button>
-                            <button type="button" class="image-btn" id="openCameraBtn">Take Photo</button>
-                        </div>
-                        <input type="file" id="uploadImages" accept="image/*" multiple>
-                        <video id="camera" autoplay playsinline></video>
-                        <canvas id="snapshot"></canvas>
-                        <div id="preview-container"></div>
-                        <div style="display: none; gap: 12px; margin-top: 12px;" id="camera-controls">
-                            <button type="button" class="image-btn" id="captureBtn">Capture</button>
-                            <button type="button" class="image-btn" id="retakeBtn">Retake</button>
-                        </div>
-                    </fieldset>
+    <!-- Near By Well-Known Landmark -->
+    <div>
+        <label for="landmark">Near By Well-Known Landmark</label>
+        <input type="text" id="landmark" name="entry.155416122">
+    </div>
 
-                    <input type="hidden" id="imgUrlInput" name="entry.1387559389">
+    <!-- Retailer Business Type -->
+    <fieldset>
+        <legend>Retailer Business Type</legend>
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="entry.47181288" value="Mobile Shop"> Mobile Shop</label>
+            <label><input type="checkbox" name="entry.47181288" value="Karyana Store"> Karyana Store</label>
+            <label><input type="checkbox" name="entry.47181288" value="Bakery"> Bakery</label>
+            <label><input type="checkbox" name="entry.47181288" value="Pan Shop"> Pan Shop</label>
+            <label><input type="checkbox" name="entry.47181288" value="Medical Store"> Medical Store</label>
+            <label><input type="checkbox" name="entry.47181288" value="Other"> Other</label>
+        </div>
+    </fieldset>
 
-                    <button type="submit" class="submit-btn">Submit Visit</button>
-                </form>
+    <!-- Monthly Sales -->
+    <div class="form-row">
+        <div>
+            <label for="zongLoadSale">Zong Load Sale (Monthly)</label>
+            <input type="text" id="zongLoadSale" name="entry.1881870355">
+        </div>
+        <div>
+            <label for="jazzLoadSale">Jazz Load Sale (Monthly)</label>
+            <input type="text" id="jazzLoadSale" name="entry.1858166855">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div>
+            <label for="telenorLoadSale">Telenor Load Sale (Monthly)</label>
+            <input type="text" id="telenorLoadSale" name="entry.773385288">
+        </div>
+        <div>
+            <label for="ufoneLoadSale">Ufone Load Sale (Monthly)</label>
+            <input type="text" id="ufoneLoadSale" name="entry.1001267991">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div>
+            <label for="zongSimSale">Zong SIM Sale (Monthly)</label>
+            <input type="text" id="zongSimSale" name="entry.418869569">
+        </div>
+        <div>
+            <label for="jazzSimSale">Jazz SIM Sale (Monthly)</label>
+            <input type="text" id="jazzSimSale" name="entry.1814324955">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div>
+            <label for="ufoneSimSale">Ufone SIM Sale (Monthly)</label>
+            <input type="text" id="ufoneSimSale" name="entry.972768172">
+        </div>
+        <div>
+            <label for="telenorSimSale">Telenor SIM Sale (Monthly)</label>
+            <input type="text" id="telenorSimSale" name="entry.1711450720">
+        </div>
+    </div>
+
+    <!-- Potential Retailer -->
+    <fieldset>
+        <legend>Potential Retailer</legend>
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="entry.1442696675" value="Yes"> Yes</label>
+            <label><input type="checkbox" name="entry.1442696675" value="No"> No</label>
+        </div>
+    </fieldset>
+
+    <!-- Zong Brand Visibility -->
+    <fieldset>
+        <legend>Zong Brand Visibility</legend>
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="entry.1911855668" value="Fascia"> Fascia</label>
+            <label><input type="checkbox" name="entry.1911855668" value="AHS"> AHS</label>
+            <label><input type="checkbox" name="entry.1911855668" value="Poster"> Poster</label>
+            <label><input type="checkbox" name="entry.1911855668" value="In-Store"> In-Store</label>
+            <label><input type="checkbox" name="entry.1911855668" value="No Brand Visibility"> No Brand Visibility</label>
+        </div>
+    </fieldset>
+
+    <!-- Date -->
+    <div>
+        <label for="date">Date</label>
+        <input type="date" id="date" name="entry.1023894194" required>
+    </div>
+
+    <!-- Questions Asked -->
+    <div>
+        <label for="description">Questions Asked</label>
+        <textarea id="description" name="entry.1030839560" required></textarea>
+    </div>
+
+    <!-- Image Upload / Capture -->
+    <fieldset>
+        <legend>Upload or Capture Image(s)</legend>
+        <div class="image-controls">
+            <button type="button" class="image-btn" id="uploadImageBtn">Upload Image</button>
+            <button type="button" class="image-btn" id="openCameraBtn">Take Photo</button>
+        </div>
+        <input type="file" id="uploadImages" accept="image/*" multiple>
+        <video id="camera" autoplay playsinline></video>
+        <canvas id="snapshot"></canvas>
+        <div id="preview-container"></div>
+        <div style="display: none; gap: 12px; margin-top: 12px;" id="camera-controls">
+            <button type="button" class="image-btn" id="captureBtn">Capture</button>
+            <button type="button" class="image-btn" id="retakeBtn">Retake</button>
+        </div>
+    </fieldset>
+
+    <input type="hidden" id="imgUrlInput" name="entry.1387559389">
+
+    <button type="submit" class="submit-btn">Submit Visit</button>
+</form>
+
             </div>
         </div>
     </div>
@@ -821,7 +946,7 @@
             console.error("Failed to load sales data", err);
         });
 
-    const retailerInput = document.getElementById("area");
+    const retailerInput = document.getElementById("retailerNumber"); // now matches the new field
 const salesInfo = document.getElementById("salesInfo");
 
 retailerInput.addEventListener("input", () => {
@@ -829,6 +954,7 @@ retailerInput.addEventListener("input", () => {
 
     if (!retailerNum || salesData.length === 0) {
         salesInfo.style.display = "none";
+        clearSalesFields();
         return;
     }
 
@@ -837,15 +963,40 @@ retailerInput.addEventListener("input", () => {
     );
 
     if (match) {
-        document.getElementById("retIdVal").textContent = match.retailerId;
-        document.getElementById("etopVal").textContent = match.etop;
-        document.getElementById("vasVal").textContent = match.vas;
-        document.getElementById("zlVal").textContent = match.zl;
+        // Fill sales info box
+        document.getElementById("retIdVal").textContent = match.retailerId || "-";
+        document.getElementById("etopVal").textContent = match.etop || "-";
+        document.getElementById("vasVal").textContent = match.vas || "-";
+        document.getElementById("zlVal").textContent = match.zl || "-";
         salesInfo.style.display = "flex";
+
+        // Fill monthly sales fields
+        document.getElementById("zongLoadSale").value = match.zongLoadSale || "";
+        document.getElementById("jazzLoadSale").value = match.jazzLoadSale || "";
+        document.getElementById("telenorLoadSale").value = match.telenorLoadSale || "";
+        document.getElementById("ufoneLoadSale").value = match.ufoneLoadSale || "";
+
+        document.getElementById("zongSimSale").value = match.zongSimSale || "";
+        document.getElementById("jazzSimSale").value = match.jazzSimSale || "";
+        document.getElementById("ufoneSimSale").value = match.ufoneSimSale || "";
+        document.getElementById("telenorSimSale").value = match.telenorSimSale || "";
+
     } else {
         salesInfo.style.display = "none";
+        clearSalesFields();
     }
 });
+
+function clearSalesFields() {
+    document.getElementById("zongLoadSale").value = "";
+    document.getElementById("jazzLoadSale").value = "";
+    document.getElementById("telenorLoadSale").value = "";
+    document.getElementById("ufoneLoadSale").value = "";
+    document.getElementById("zongSimSale").value = "";
+    document.getElementById("jazzSimSale").value = "";
+    document.getElementById("ufoneSimSale").value = "";
+    document.getElementById("telenorSimSale").value = "";
+}
 
 
         });
