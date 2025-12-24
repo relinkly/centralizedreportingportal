@@ -423,6 +423,7 @@
 
 
 
+
     </style>
 </head>
 <body>
@@ -473,72 +474,61 @@
         <input type="text" id="username" name="entry.87973702" readonly>
     </div>
 
-    <!-- Region -->
+     <!-- Retailer Number -->
     <div>
-        <label for="region">Region</label>
-        <select id="region" name="entry.1539264942" required>
-            <option value="" disabled selected>Select region</option>
-            <option value="Central 1">Central 1</option>
-            <option value="Central 4">Central 4</option>
-            <option value="Central 5">Central 5</option>
-            <option value="Central 6">Central 6</option>
-        </select>
+        <label for="retailerNumber">Retailer Number</label>
+        <input type="text" id="retailerNumber" name="entry.506270558">
     </div>
 
-    <!-- Franchise -->
+    <!-- Retailer Name -->
     <div>
-        <label for="franchise">Franchise ID</label>
-        <input type="text" id="franchise" name="entry.133050488" required>
+        <label for="retailerName">Retailer ID</label>
+        <input type="text" id="retailerName" name="entry.1620590316">
     </div>
 
-    <!-- Area -->
-    <div>
-        <label for="area">Area</label>
-        <input type="text" id="area" name="entry.2102334677" required>
-    </div>
-
-    <!-- RSO ID -->
+        <!-- RSO ID -->
     <div>
         <label for="rsoId">RSO ID</label>
-        <input type="text" id="rsoId" name="entry.1053960928">
+        <input type="text" id="rsoId" name="entry.1275556749">
     </div>
 
     <!-- RSO Number -->
     <div>
         <label for="rsoNumber">RSO Number</label>
-        <input type="text" id="rsoNumber" name="entry.1113091229">
+        <input type="text" id="rsoNumber" name="entry.1282572099">
     </div>
 
-    <!-- Retailer Name -->
+        <!-- Franchise -->
     <div>
-        <label for="retailerName">Retailer Name</label>
-        <input type="text" id="retailerName" name="entry.1271661439">
-
-
-    <!-- Retailer Number -->
-    <div>
-        <label for="retailerNumber">Retailer Number</label>
-        <input type="text" id="retailerNumber" name="entry.1530103964">
+        <label for="franchise">Franchise ID</label>
+        <input type="text" id="franchise" name="entry.1541343502">
     </div>
 
+     <div>
+        <label for="franchise">Grid ID</label>
+        <input type="text" id="grid" name="entry.1346442174">
+    </div>
+
+    <!-- Region -->
+    <div>
+        <label for="region">Region</label>
+        <input type="text" id="region" name="entry.1043907566">
+    </div>
+
+
+    <div class="form-row">
+        <div>
+            <label for="zongLoadSale">LM ETOP</label>
+            <input type="text" id="ETOP" name="entry.2012687757">
         </div>
-    <div id="salesInfo" style="display:none; flex-direction: column; border: 1px solid #ccc; padding: 8px; margin-bottom: 12px;">
-    <div>Retailer ID: <span id="retIdVal">-</span></div>
-    <div>ETOP LM: <span id="etopVal">-</span></div>
-    <div>VAS LM: <span id="vasVal">-</span></div>
-    <div>ZL LM: <span id="zlVal">-</span></div>
-</div>
-
-    <!-- Retailer Complete Address -->
-    <div>
-        <label for="retailerAddress">Retailer Complete Address</label>
-        <input type="text" id="retailerAddress" name="entry.1872480257">
-    </div>
-
-    <!-- Near By Well-Known Landmark -->
-    <div>
-        <label for="landmark">Near By Well-Known Landmark</label>
-        <input type="text" id="landmark" name="entry.155416122">
+        <div>
+            <label for="jazzLoadSale">LM VAS</label>
+            <input type="text" id="VAS" name="entry.1621435321">
+        </div>
+        <div>
+            <label for="jazzLoadSale">LM ZL</label>
+            <input type="text" id="ZL" name="entry.449779479">
+        </div>
     </div>
 
     <!-- Retailer Business Type -->
@@ -554,7 +544,9 @@
         </div>
     </fieldset>
 
-    <!-- Monthly Sales -->
+
+
+
     <div class="form-row">
         <div>
             <label for="zongLoadSale">Zong Load Sale (Monthly)</label>
@@ -599,15 +591,37 @@
         </div>
     </div>
 
-    <!-- Potential Retailer -->
-    <fieldset>
-        <legend>Potential Retailer</legend>
-        <div class="checkbox-group">
-            <label><input type="checkbox" name="entry.1442696675" value="Yes"> Yes</label>
-            <label><input type="checkbox" name="entry.1442696675" value="No"> No</label>
-        </div>
-    </fieldset>
 
+    <div>
+        <label for="bundle">Top Selling Bundle</label>
+        <textarea id="bundle" name="entry.1030839560" required></textarea>
+    </div>
+
+    <fieldset>
+  <legend>Frequent Problems</legend>
+  <div class="checkbox-group">
+    <label><input type="checkbox" name="entry.1442696675" value="Zong Dost App"> Zong Dost App</label>
+    <label><input type="checkbox" name="entry.1442696675" value="*961#"> *961#</label>
+    <label><input type="checkbox" name="entry.1442696675" value="Load Shedding"> Load Shedding</label>
+    <label><input type="checkbox" name="entry.1442696675" value="Supply Issue"> Supply Issue</label>
+    <label><input type="checkbox" name="entry.1442696675" value="RSO Issue"> RSO Issue</label>
+    <label><input type="checkbox" name="entry.1442696675" value="Device Location Issue"> Device: Location Issue</label>
+    <label><input type="checkbox" name="entry.1442696675" value="Scanner Sensitivity Issue"> Device: Scanner Sensitivity Issue</label>
+    <label><input type="checkbox" name="entry.1442696675" value="Failed Transaction During Peak Hours Issue"> Device: Failed Transaction During Peak Hours Issue</label>
+    
+    <!-- Others option -->
+    <label>
+      <input type="checkbox" id="otherCheckbox"> Others
+      <input type="text" id="otherText" name="entry.1442696675" placeholder="Please specify" style="display:none;">
+    </label>
+  </div>
+</fieldset>
+
+
+
+
+
+    
     <!-- Zong Brand Visibility -->
     <fieldset>
         <legend>Zong Brand Visibility</legend>
@@ -651,6 +665,18 @@
 
     <input type="hidden" id="imgUrlInput" name="entry.1387559389">
 
+      <div>
+      <label for="latitude">Latitude</label>
+      <input type="text" id="latitude" name="entry.85857676" readonly>
+  </div>
+
+  <div>
+      <label for="longitude">Longitude</label>
+      <input type="text" id="longitude" name="entry.536006170" readonly>
+  </div>
+</div>
+
+
     <button type="submit" class="submit-btn">Submit Visit</button>
 </form>
 
@@ -660,6 +686,16 @@
 
     <iframe name="hidden_iframe" style="display:none;"></iframe>
 
+
+    <script>
+  const otherCheckbox = document.getElementById('otherCheckbox');
+  const otherText = document.getElementById('otherText');
+
+  otherCheckbox.addEventListener('change', function() {
+    otherText.style.display = this.checked ? 'inline-block' : 'none';
+    if (!this.checked) otherText.value = ''; // Clear text if unchecked
+  });
+</script>
     <script>
 (function protectPage() {
     const loggedInUser = sessionStorage.getItem("username");
@@ -673,6 +709,62 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+
+          const latInput = document.getElementById("latitude");
+          const longInput = document.getElementById("longitude");
+
+        function setManualFallback() {
+        latInput.value = "";
+        longInput.value = "";
+        latInput.removeAttribute("readonly");
+        longInput.removeAttribute("readonly");
+        latInput.placeholder = "Enter latitude manually";
+        longInput.placeholder = "Enter longitude manually";
+        }
+
+        function getExactDeviceLocation() {
+        latInput.value = "Waiting for GPS...";
+        longInput.value = "Waiting for GPS...";
+
+        if (!navigator.geolocation) {
+            alert("Your device does not support GPS location.");
+            setManualFallback();
+            return;
+        }
+
+    navigator.geolocation.getCurrentPosition(
+        position => {
+        latInput.value = position.coords.latitude.toFixed(6);
+        longInput.value = position.coords.longitude.toFixed(6);
+
+      console.log("✅ Exact GPS location:", {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+        accuracy: position.coords.accuracy + " meters"
+      });
+    },
+    error => {
+      console.error("❌ GPS error:", error);
+
+      alert(
+        "Exact location is required.\n\n" +
+        "Please:\n" +
+        "• Enable Location Services\n" +
+        "• Allow browser location permission\n" +
+        "• Use HTTPS\n" +
+        "• Try again"
+      );
+
+      setManualFallback();
+    },
+    {
+      enableHighAccuracy: true,
+      timeout: 20000,   // GPS needs time
+      maximumAge: 0
+    }
+  );
+}
+
 
           
             let imageList = [];
@@ -702,6 +794,7 @@
                 document.getElementById("preview-container").innerHTML = "";
                 imageList = [];
                 stopCamera();
+                getExactDeviceLocation();
             }
 
             function closeModal() {
@@ -872,11 +965,10 @@
 
             incidentForm.addEventListener("submit", async (event) => {
                 event.preventDefault();
-                const area = incidentForm.area.value.trim();
                 const description = incidentForm.description.value.trim();
                 const imgUrlInput = document.getElementById("imgUrlInput");
 
-                if (!area || !description) {
+                if (!description) {
                     alert("Please fill in all required fields.");
                     return;
                 }
@@ -931,61 +1023,70 @@
 
             });
 
-    let salesData = [];
+let salesData = [];
 
-    fetch('./MTD.json')
-        .then(res => {
-            if (!res.ok) throw new Error("HTTP error " + res.status);
-            return res.json();
-        })
-        .then(data => {
-            salesData = data;
-            console.log("Sales data loaded:", salesData.length);
-        })
-        .catch(err => {
-            console.error("Failed to load sales data", err);
-        });
+fetch('./MTD.json')
+  .then(res => {
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
+  })
+  .then(data => {
+    salesData = data;
+    console.log("Retailer data loaded:", salesData.length);
+  })
+  .catch(err => {
+    console.error("Failed to load retailer data:", err);
+  });
 
-    const retailerInput = document.getElementById("retailerNumber"); // now matches the new field
-const salesInfo = document.getElementById("salesInfo");
+const retailerInput = document.getElementById("retailerNumber");
 
 retailerInput.addEventListener("input", () => {
-    const retailerNum = retailerInput.value.trim();
+  const retailerNum = retailerInput.value.trim();
 
-    if (!retailerNum || salesData.length === 0) {
-        salesInfo.style.display = "none";
-        clearSalesFields();
-        return;
-    }
+  if (!retailerNum || !salesData.length) {
+    clearAutoFields();
+    return;
+  }
 
-    const match = salesData.find(
-        r => r.retailernum.toLowerCase() === retailerNum.toLowerCase()
-    );
+  const match = salesData.find(
+    r => String(r.ret_num).trim() === retailerNum
+  );
 
-    if (match) {
-        // Fill sales info box
-        document.getElementById("retIdVal").textContent = match.retailerId || "-";
-        document.getElementById("etopVal").textContent = match.etop || "-";
-        document.getElementById("vasVal").textContent = match.vas || "-";
-        document.getElementById("zlVal").textContent = match.zl || "-";
-        salesInfo.style.display = "flex";
+  if (!match) {
+    clearAutoFields();
+    return;
+  }
 
-        // Fill monthly sales fields
-        document.getElementById("zongLoadSale").value = match.zongLoadSale || "";
-        document.getElementById("jazzLoadSale").value = match.jazzLoadSale || "";
-        document.getElementById("telenorLoadSale").value = match.telenorLoadSale || "";
-        document.getElementById("ufoneLoadSale").value = match.ufoneLoadSale || "";
+  document.getElementById("retailerName").value = match.ret_id ?? "";
+  document.getElementById("rsoId").value = match.rso_id ?? "";
+  document.getElementById("rsoNumber").value = match.rso_num ?? "";
+  document.getElementById("franchise").value = match.fran ?? "";
+  document.getElementById("grid").value = match.grid ?? "";
+  document.getElementById("region").value = match.region ?? "";
 
-        document.getElementById("zongSimSale").value = match.zongSimSale || "";
-        document.getElementById("jazzSimSale").value = match.jazzSimSale || "";
-        document.getElementById("ufoneSimSale").value = match.ufoneSimSale || "";
-        document.getElementById("telenorSimSale").value = match.telenorSimSale || "";
-
-    } else {
-        salesInfo.style.display = "none";
-        clearSalesFields();
-    }
+  document.getElementById("ETOP").value = match.mtd_etop ?? "";
+  document.getElementById("VAS").value = match.mtd_964 ?? "";
+  document.getElementById("ZL").value = match.mtd_zl ?? "";
 });
+
+function clearAutoFields() {
+  [
+    "retailerName",
+    "rsoId",
+    "rsoNumber",
+    "franchise",
+    "grid",
+    "region",
+    "ETOP",
+    "VAS",
+    "ZL"
+  ].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = "";
+  });
+}
+
+
 
 function clearSalesFields() {
     document.getElementById("zongLoadSale").value = "";
