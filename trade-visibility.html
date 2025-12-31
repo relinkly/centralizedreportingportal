@@ -21,7 +21,7 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 48px 64px;
+            padding: 48px 10px;
         }
 
         .page-header {
@@ -64,7 +64,6 @@
         .info-section {
             margin-bottom: 20px;
             padding-bottom: 32px;
-            border-bottom: 1px solid #e8e8e8;
         }
 
         .info-section h3 {
@@ -396,6 +395,48 @@
     display: flex;
     flex-direction: column; /* keep label above input */
   }
+
+
+  /* Soft gradient base */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(
+        120deg,
+        #ffffff 0%,
+        #f9fafb 55%,
+        #f1f5f9 100%
+    );
+    z-index: -2;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    top: 50%;
+    right: -130px;
+    transform: translateY(-50%);
+
+    width: 750px;
+    height: 750px;
+
+    background-image: url("tradeimage.jpg");
+    background-size: cover;
+    background-position: center 45%;
+    background-repeat: no-repeat;
+
+    /* LEFT side = semi-circle, RIGHT side = square */
+    border-radius: 375px 0 0 375px;
+
+    opacity: 0.5;
+    z-index: -1;
+    pointer-events: none;
+}
+
+
+
+
     </style>
 </head>
 <body>
@@ -427,6 +468,7 @@
         <div class="modal">
             <div class="modal-header">
                 <h3>Trade Items Visibility Details</h3>
+                <p>Please enable device location</p>
                 <button class="close-modal-btn" type="button">&times;</button>
             </div>
             <div class="modal-body">
