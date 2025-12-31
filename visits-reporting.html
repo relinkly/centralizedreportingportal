@@ -21,7 +21,7 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 48px 64px;
+            padding: 48px 10px;
         }
 
         .page-header {
@@ -64,7 +64,6 @@
         .info-section {
             margin-bottom: 20px;
             padding-bottom: 32px;
-            border-bottom: 1px solid #e8e8e8;
         }
 
         .info-section h3 {
@@ -420,7 +419,28 @@
     color: #10b981; /* green to highlight the value */
 }
 
+body::after {
+    content: "";
+    position: fixed;
+    top: 50%;
+    right: -130px;
+    transform: translateY(-50%);
 
+    width: 750px;
+    height: 750px;
+
+    background-image: url("visitimage.jpg");
+    background-size: cover;
+    background-position: center 45%;
+    background-repeat: no-repeat;
+
+    /* LEFT side = semi-circle, RIGHT side = square */
+    border-radius: 375px 0 0 375px;
+
+    opacity: 0.5;
+    z-index: -1;
+    pointer-events: none;
+}
 
 
 
@@ -433,12 +453,12 @@
 
         <div class="page-header">
             <h2>Visit Reporting</h2>
-            <p>Report visite that show sales activities</p>
+            <p>Report visit that show sales activities</p>
         </div>
 
         <div class="info-section">
             <h3>What Can Be Reported</h3>
-            <p>This form is for market visit report for Zong sales staff. Examples include, but are not limited to:</p>
+            <p>This form is for market visit report for Zong sales staff. Examples include:</p>
             <ul>
                 <li>To track <strong>on-ground market conditions</strong> and competitor activities</li>
                 <li>To assess <strong>franchise / retailer performance</strong> and compliance</li>
@@ -459,6 +479,7 @@
         <div class="modal">
             <div class="modal-header">
                 <h3>Visit Details</h3>
+                <p>Please enable device location</p>
                 <button class="close-modal-btn" type="button">&times;</button>
             </div>
             <div class="modal-body">
