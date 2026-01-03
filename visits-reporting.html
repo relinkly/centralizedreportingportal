@@ -911,36 +911,27 @@ body::after {
             }
 
             async function uploadToImgbb(base64Image, username) {
-  const workerUrl = "https://imgbb-upload.sameenyaser4.workers.dev"; // <-- CHANGE THIS
-
-  const base64 = base64Image.replace(/^data:image\/\w+;base64,/, '');
-  const timestamp = new Date().toISOString().replace(/:/g, '-');
-  const fileName = `${username}_${timestamp}.jpg`;
-
-  const formData = new FormData();
-  formData.append("image", base64);
-  formData.append("name", fileName);
-
-  try {
-    const response = await fetch(workerUrl, {
-      method: "POST",
-      body: formData
-    });
-
-    const result = await response.json();
-
-    if (result.success) {
-      return result.data.url;
-    } else {
-      throw new Error(result.error || "Upload failed");
-    }
-  } catch (err) {
-    alert("Image upload failed");
-    console.error(err);
-    return null;
-  }
-}
-
+                const apiKey = '14e51e0636e117beac224a32711adc49';
+                const url = `https://api.imgbb.com/1/upload?key=${apiKey}`;
+                const base64 = base64Image.replace(/^data:image\/\w+;base64,/, '');
+                const timestamp = new Date().toISOString().replace(/:/g, '-');
+                const fileName = `${username}_${timestamp}.png`;
+                const formData = new FormData();
+                formData.append('image', base64);
+                formData.append('name', fileName);
+                try {
+                    const response = await fetch(url, { method: 'POST', body: formData });
+                    const result = await response.json();
+                    if (result.success) {
+                        return result.data.url;
+                    } else {
+                        throw new Error('Upload failed');
+                    }
+                } catch (error) {
+                    alert("Failed to upload image: " + error.message);
+                    return null;
+                }
+            }
 
             reportBtn.addEventListener("click", openModal);
             closeModalBtn.addEventListener("click", closeModal);
@@ -1138,4 +1129,3 @@ function clearSalesFields() {
 
 </body>
 </html>
-
