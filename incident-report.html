@@ -682,28 +682,31 @@
                 });
             }
 
-            async function uploadToImgbb(base64Image, username) {
-                const apiKey = '14e51e0636e117beac224a32711adc49';
-                const url = `https://api.imgbb.com/1/upload?key=${apiKey}`;
-                const base64 = base64Image.replace(/^data:image\/\w+;base64,/, '');
-                const timestamp = new Date().toISOString().replace(/:/g, '-');
-                const fileName = `${username}_${timestamp}.png`;
-                const formData = new FormData();
-                formData.append('image', base64);
-                formData.append('name', fileName);
-                try {
-                    const response = await fetch(url, { method: 'POST', body: formData });
-                    const result = await response.json();
-                    if (result.success) {
-                        return result.data.url;
-                    } else {
-                        throw new Error('Upload failed');
-                    }
-                } catch (error) {
-                    alert("Failed to upload image: " + error.message);
-                    return null;
-                }
-            }
+            async function uploadToCloudinary(fileOrBase64) {
+    const cloudName = 'dcvvvjulz';       // your Cloudinary cloud name
+    const uploadPreset = 'images-preset';  // your unsigned preset name
+
+    const formData = new FormData();
+    formData.append('file', fileOrBase64);
+    formData.append('upload_preset', uploadPreset);
+
+    try {
+        const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/upload`, {
+            method: 'POST',
+            body: formData
+        });
+        const data = await res.json();
+        if (data.secure_url) {
+            return data.secure_url; // This is the URL you can send to Google Forms
+        } else {
+            throw new Error("Upload failed");
+        }
+    } catch (err) {
+        console.error("Cloudinary upload error:", err);
+        alert("Failed to upload image to Cloudinary: " + err.message);
+        return null;
+    }
+}
 
             reportBtn.addEventListener("click", openModal);
             closeModalBtn.addEventListener("click", closeModal);
@@ -797,7 +800,7 @@
                         alert("Unsupported image type.");
                         return;
                     }
-                    const uploadedImageUrl = await uploadToImgbb(base64Image, loggedInUser);
+                    const uploadedImageUrl = await uploadToCloudinary(img);
                     if (uploadedImageUrl) {
                         uploadedUrls.push(uploadedImageUrl);
                     } else {
@@ -819,4 +822,5 @@
     </script>
 </body>
 </html>
+
 
