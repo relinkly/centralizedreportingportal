@@ -925,21 +925,29 @@ async function uploadToImgbb(blob, username) {
     const fileName = `${username}_${timestamp}.png`;
 
     try {
-        // Send image to Worker as JSON
         const response = await fetch(workerUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ image: base64Image, name: fileName })
         });
 
-        const result = await response.json();
+        // Read body once
+        const text = await response.text(); // read as text first
+        let result;
+        try {
+            result = JSON.parse(text); // try parsing JSON
+        } catch (err) {
+            console.error('Worker returned invalid JSON:', text);
+            throw new Error('Upload failed (invalid response)');
+        }
 
         if (result.success) {
-            return result.data.url; // ImgBB URL
+            return result.data.url; // return the uploaded image URL
         } else {
             throw new Error(result.error || 'Upload failed');
         }
     } catch (error) {
+        console.error('Upload error:', error);
         alert("Failed to upload image: " + error.message);
         return null;
     }
@@ -1141,6 +1149,7 @@ function clearSalesFields() {
 
 </body>
 </html>
+
 
 
 
