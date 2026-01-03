@@ -909,37 +909,35 @@ body::after {
                     previewContainer.appendChild(wrapper);
                 });
             }
-
-            async function uploadToImgbb(base64Image, username) {
-    // Cloudflare Worker URL (replace with your actual Worker URL)
+async function uploadToImgbb(blob, username) {
     const workerUrl = 'https://imgbb-proxy.sameenyaser4.workers.dev';
 
-    const base64Image = await getBase64(blob); // your existing code
-await fetch('https://imgbb-proxy.sameenyaser4.workers.dev/', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ image: base64Image, name: fileName })
-})
+    // Convert Blob to base64
+    const base64Image = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+    });
 
+    // Create file name
     const timestamp = new Date().toISOString().replace(/:/g, '-');
     const fileName = `${username}_${timestamp}.png`;
 
-    const formData = new FormData();
-    formData.append('image', base64);
-    formData.append('name', fileName);
-
     try {
+        // Send image to Worker as JSON
         const response = await fetch(workerUrl, {
             method: 'POST',
-            body: formData
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ image: base64Image, name: fileName })
         });
 
         const result = await response.json();
 
         if (result.success) {
-            return result.data.url;
+            return result.data.url; // ImgBB URL
         } else {
-            throw new Error(result.error?.message || 'Upload failed');
+            throw new Error(result.error || 'Upload failed');
         }
     } catch (error) {
         alert("Failed to upload image: " + error.message);
@@ -1144,5 +1142,6 @@ function clearSalesFields() {
 
 </body>
 </html>
+
 
 
