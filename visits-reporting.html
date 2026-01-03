@@ -998,64 +998,63 @@ async function uploadToImgbb(blob, username) {
             });
 
             incidentForm.addEventListener("submit", async (event) => {
-                event.preventDefault();
-                const description = incidentForm.description.value.trim();
-                const imgUrlInput = document.getElementById("imgUrlInput");
+    event.preventDefault();
 
-                if (!description) {
-                    alert("Please fill in all required fields.");
-                    return;
-                }
+    const description = incidentForm.description.value.trim();
+    const imgUrlInput = document.getElementById("imgUrlInput");
 
-                if (imageList.length === 0) {
-                    alert("Please upload or capture at least one image before submitting.");
-                    return;
-                }
+    if (!description) {
+        alert("Please fill in all required fields.");
+        return;
+    }
 
-                const uploadedUrls = [];
-                for (let img of imageList) {
-                    let base64Image = null;
-                    if (typeof img === 'string') {
-                        base64Image = img;
-                    } else if (img instanceof Blob) {
-                        base64Image = await new Promise((resolve, reject) => {
-                            const reader = new FileReader();
-                            reader.onload = () => resolve(reader.result);
-                            reader.onerror = reject;
-                            reader.readAsDataURL(img);
-                        });
-                    } else {
-                        alert("Unsupported image type.");
-                        return;
-                    }
-                    const uploadedImageUrl = await uploadToImgbb(base64Image, loggedInUser);
-                    if (uploadedImageUrl) {
-                        uploadedUrls.push(uploadedImageUrl);
-                    } else {
-                        alert("Failed to upload one or more images. Please try again.");
-                        return;
-                    }
-                }
+    if (imageList.length === 0) {
+        alert("Please upload or capture at least one image before submitting.");
+        return;
+    }
 
-                imgUrlInput.value = uploadedUrls.join('\n');
-                incidentForm.submit();
-                alert("Visit reported successfully.");
-                incidentForm.reset();
-                imageList = [];
-                usernameInput.value = loggedInUser;
-                document.getElementById('preview-container').innerHTML = '';
-                closeModal();
+    const uploadedUrls = [];
 
-                if (!loggedInUser) {
-                alert("Session expired. Please log in again.");
-                window.location.href = "index.html";
-                return;
-                }
+    // Upload each image via Worker
+    for (let img of imageList) {
+        if (!(img instanceof Blob)) {
+            alert("Unsupported image type.");
+            return;
+        }
 
+        const uploadedImageUrl = await uploadToImgbb(img, loggedInUser);
+        if (uploadedImageUrl) {
+            uploadedUrls.push(uploadedImageUrl);
+        } else {
+            alert("Failed to upload one or more images. Please try again.");
+            return;
+        }
+    }
 
-           
+    // Set URLs in hidden input for form submission
+    imgUrlInput.value = uploadedUrls.join('\n');
 
-            });
+    // Submit form
+    incidentForm.submit();
+
+    alert("Visit reported successfully.");
+
+    // Reset form and image list
+    incidentForm.reset();
+    imageList = [];
+    usernameInput.value = loggedInUser;
+    document.getElementById('preview-container').innerHTML = '';
+
+    closeModal();
+
+    // Check session
+    if (!loggedInUser) {
+        alert("Session expired. Please log in again.");
+        window.location.href = "index.html";
+        return;
+    }
+});
+
 
 let salesData = [];
 
@@ -1142,6 +1141,7 @@ function clearSalesFields() {
 
 </body>
 </html>
+
 
 
 
