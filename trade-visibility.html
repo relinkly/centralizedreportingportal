@@ -433,12 +433,13 @@ body::after {
     z-index: -1;
     pointer-events: none;
 }
-
+/* Hide background image on screens smaller than 768px */
 @media (max-width: 768px) {
-  body::after {
-    display: none;
-  }
+    body::after {
+        display: none;
+    }
 }
+
 
 
 
@@ -754,28 +755,39 @@ function getExactDeviceLocation() {
                 });
             }
 
-            async function uploadToImgbb(base64Image, username) {
-                const apiKey = '14e51e0636e117beac224a32711adc49';
-                const url = `https://api.imgbb.com/1/upload?key=${apiKey}`;
-                const base64 = base64Image.replace(/^data:image\/\w+;base64,/, '');
-                const timestamp = new Date().toISOString().replace(/:/g, '-');
-                const fileName = `${username}_${timestamp}.png`;
-                const formData = new FormData();
-                formData.append('image', base64);
-                formData.append('name', fileName);
-                try {
-                    const response = await fetch(url, { method: 'POST', body: formData });
-                    const result = await response.json();
-                    if (result.success) {
-                        return result.data.url;
-                    } else {
-                        throw new Error('Upload failed');
-                    }
-                } catch (error) {
-                    alert("Failed to upload image: " + error.message);
-                    return null;
-                }
-            }
+            async function uploadToCloudinary(fileOrBase64) {
+    const cloudName = 'dcvvvjulz';
+    const uploadPreset = 'images-preset';
+
+    const formData = new FormData();
+    
+    // Cloudinary accepts both Blob/File or base64
+    if (fileOrBase64 instanceof Blob) {
+        formData.append('file', fileOrBase64);
+    } else {
+        formData.append('file', fileOrBase64);
+    }
+
+    formData.append('upload_preset', uploadPreset);
+
+    try {
+        const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/upload`, {
+            method: 'POST',
+            body: formData
+        });
+        const data = await res.json();
+        if (data.secure_url) {
+            return data.secure_url; // ✅ This is the public URL of the uploaded image
+        } else {
+            throw new Error("Upload failed");
+        }
+    } catch (err) {
+        console.error("Cloudinary upload error:", err);
+        alert("Failed to upload image to Cloudinary: " + err.message);
+        return null;
+    }
+}
+
 
             reportBtn.addEventListener("click", openModal);
             closeModalBtn.addEventListener("click", closeModal);
@@ -869,7 +881,7 @@ function getExactDeviceLocation() {
         }
 
         // Upload the image and get the URL
-        const uploadedImageUrl = await uploadToImgbb(base64Image, loggedInUser);
+        const uploadedImageUrl = await uploadToCloudinary(img);
         if (uploadedImageUrl) {
             uploadedUrls.push(uploadedImageUrl);
         } else {
@@ -905,4 +917,3 @@ function getExactDeviceLocation() {
     </script>
 </body>
 </html>
-
