@@ -909,52 +909,32 @@ body::after {
                     previewContainer.appendChild(wrapper);
                 });
             }
-async function uploadToImgbb(blob, username) {
-    const workerUrl = 'https://imgbb-proxy.sameenyaser4.workers.dev';
 
-    // Convert Blob to base64
-    const base64Image = await new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(blob);
-    });
+            async function uploadToCloudinary(fileOrBase64) {
+    const cloudName = 'dcvvvjulz';       // your Cloudinary cloud name
+    const uploadPreset = 'images-preset';  // your unsigned preset name
 
-    // Create file name
-    const timestamp = new Date().toISOString().replace(/:/g, '-');
-    const fileName = `${username}_${timestamp}.png`;
+    const formData = new FormData();
+    formData.append('file', fileOrBase64);
+    formData.append('upload_preset', uploadPreset);
 
     try {
-        const response = await fetch(workerUrl, {
+        const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/upload`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ image: base64Image, name: fileName })
+            body: formData
         });
-
-        // Always read body only once
-        const text = await response.text();
-
-        let result;
-        try {
-            result = JSON.parse(text); // parse JSON safely
-        } catch (err) {
-            console.error('Worker returned invalid JSON:', text);
-            throw new Error('Upload failed (invalid response)');
-        }
-
-        if (result.success) {
-            return result.data.url; // uploaded image URL
+        const data = await res.json();
+        if (data.secure_url) {
+            return data.secure_url; // This is the URL you can send to Google Forms
         } else {
-            throw new Error(result.error || 'Upload failed');
+            throw new Error("Upload failed");
         }
-
-    } catch (error) {
-        console.error('Upload error:', error);
-        alert("Failed to upload image: " + error.message);
+    } catch (err) {
+        console.error("Cloudinary upload error:", err);
+        alert("Failed to upload image to Cloudinary: " + err.message);
         return null;
     }
 }
-
 
 
             reportBtn.addEventListener("click", openModal);
@@ -1009,63 +989,64 @@ async function uploadToImgbb(blob, username) {
             });
 
             incidentForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
+                event.preventDefault();
+                const description = incidentForm.description.value.trim();
+                const imgUrlInput = document.getElementById("imgUrlInput");
 
-    const description = incidentForm.description.value.trim();
-    const imgUrlInput = document.getElementById("imgUrlInput");
+                if (!description) {
+                    alert("Please fill in all required fields.");
+                    return;
+                }
 
-    if (!description) {
-        alert("Please fill in all required fields.");
-        return;
-    }
+                if (imageList.length === 0) {
+                    alert("Please upload or capture at least one image before submitting.");
+                    return;
+                }
 
-    if (imageList.length === 0) {
-        alert("Please upload or capture at least one image before submitting.");
-        return;
-    }
+                const uploadedUrls = [];
+                for (let img of imageList) {
+                    let base64Image = null;
+                    if (typeof img === 'string') {
+                        base64Image = img;
+                    } else if (img instanceof Blob) {
+                        base64Image = await new Promise((resolve, reject) => {
+                            const reader = new FileReader();
+                            reader.onload = () => resolve(reader.result);
+                            reader.onerror = reject;
+                            reader.readAsDataURL(img);
+                        });
+                    } else {
+                        alert("Unsupported image type.");
+                        return;
+                    }
+                    const uploadedImageUrl = await uploadToCloudinary(img);
+                    if (uploadedImageUrl) {
+                        uploadedUrls.push(uploadedImageUrl);
+                    } else {
+                        alert("Failed to upload one or more images. Please try again.");
+                        return;
+                    }
+                }
 
-    const uploadedUrls = [];
+                imgUrlInput.value = uploadedUrls.join('\n');
+                incidentForm.submit();
+                alert("Visit reported successfully.");
+                incidentForm.reset();
+                imageList = [];
+                usernameInput.value = loggedInUser;
+                document.getElementById('preview-container').innerHTML = '';
+                closeModal();
 
-    // Upload each image via Worker
-    for (let img of imageList) {
-        if (!(img instanceof Blob)) {
-            alert("Unsupported image type.");
-            return;
-        }
+                if (!loggedInUser) {
+                alert("Session expired. Please log in again.");
+                window.location.href = "index.html";
+                return;
+                }
 
-        const uploadedImageUrl = await uploadToImgbb(img, loggedInUser);
-        if (uploadedImageUrl) {
-            uploadedUrls.push(uploadedImageUrl);
-        } else {
-            alert("Failed to upload one or more images. Please try again.");
-            return;
-        }
-    }
 
-    // Set URLs in hidden input for form submission
-    imgUrlInput.value = uploadedUrls.join('\n');
+           
 
-    // Submit form
-    incidentForm.submit();
-
-    alert("Visit reported successfully.");
-
-    // Reset form and image list
-    incidentForm.reset();
-    imageList = [];
-    usernameInput.value = loggedInUser;
-    document.getElementById('preview-container').innerHTML = '';
-
-    closeModal();
-
-    // Check session
-    if (!loggedInUser) {
-        alert("Session expired. Please log in again.");
-        window.location.href = "index.html";
-        return;
-    }
-});
-
+            });
 
 let salesData = [];
 
@@ -1152,9 +1133,3 @@ function clearSalesFields() {
 
 </body>
 </html>
-
-
-
-
-
-
