@@ -914,7 +914,13 @@ body::after {
     // Cloudflare Worker URL (replace with your actual Worker URL)
     const workerUrl = 'https://imgbb-proxy.sameenyaser4.workers.dev';
 
-    const base64 = base64Image.replace(/^data:image\/\w+;base64,/, '');
+    const base64Image = await getBase64(blob); // your existing code
+await fetch('https://imgbb-proxy.sameenyaser4.workers.dev/', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ image: base64Image, name: fileName })
+})
+
     const timestamp = new Date().toISOString().replace(/:/g, '-');
     const fileName = `${username}_${timestamp}.png`;
 
@@ -1138,4 +1144,5 @@ function clearSalesFields() {
 
 </body>
 </html>
+
 
