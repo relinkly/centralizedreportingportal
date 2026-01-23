@@ -448,6 +448,10 @@ body::after {
     }
 }
 
+        .input-error {
+  border: 2px solid red;
+}
+
 
     </style>
 </head>
@@ -502,9 +506,20 @@ body::after {
 
      <!-- Retailer Number -->
     <div>
-        <label for="retailerNumber">Retailer Number</label>
-        <input type="text" id="retailerNumber" name="entry.506270558" data-required="true">
-    </div>
+  <label for="retailerNumber">Retailer Number</label>
+  <input
+    type="text"
+    id="retailerNumber"
+    name="entry.506270558"
+    data-required="true"
+    maxlength="12"
+    inputmode="numeric"
+  >
+  <small id="retailerError" style="color:red; display:none;">
+    Retailer number must start with 92 and be exactly 12 digits (e.g. 923148654144)
+  </small>
+</div>
+
 
     <!-- Retailer Name -->
     <div>
@@ -796,7 +811,35 @@ body::after {
   );
 }
 
+const retailerInput = document.getElementById("retailerNumber");
+const retailerError = document.getElementById("retailerError");
 
+function isValidRetailerNumber(value) {
+  return /^92\d{10}$/.test(value);
+}
+
+retailerInput.addEventListener("input", () => {
+  // allow digits only
+  retailerInput.value = retailerInput.value.replace(/\D/g, "");
+
+  const value = retailerInput.value.trim();
+
+  if (!value) {
+    retailerError.style.display = "none";
+    retailerInput.classList.remove("input-error");
+    return;
+  }
+
+  if (!isValidRetailerNumber(value)) {
+    retailerError.style.display = "block";
+    retailerInput.classList.add("input-error");
+  } else {
+    retailerError.style.display = "none";
+    retailerInput.classList.remove("input-error");
+  }
+});
+
+            
           
             let imageList = [];
             const reportBtn = document.getElementById("reportBtn");
@@ -1030,7 +1073,16 @@ body::after {
 
             incidentForm.addEventListener("submit", async (event) => {
                 event.preventDefault();
-                  event.preventDefault();
+
+                const retailerValue = retailerInput.value.trim();
+
+              if (!isValidRetailerNumber(retailerValue)) {
+                retailerError.style.display = "block";
+                retailerInput.focus();
+                alert("Please enter a valid retailer number starting with 92 and 12 digits long.");
+                return;
+              }
+
 
                   if (!validateRequiredFields(incidentForm)) return;
 
@@ -1170,5 +1222,6 @@ function clearSalesFields() {
 
 </body>
 </html>
+
 
 
